@@ -12,7 +12,10 @@ import {
     addDoc,
     query,
     where,
-    getDocs
+    getDocs,
+    doc,
+    updateDoc,
+    arrayUnion
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
 
@@ -73,7 +76,7 @@ const trackingPage =
 
 
 // ======================================================
-// BUTTON ELEMENTS
+// BUTTONS
 // ======================================================
 
 const createBtn =
@@ -200,7 +203,7 @@ joinBtn.addEventListener(
 
 
 // ======================================================
-// CREATE → HOME
+// BACK BUTTONS
 // ======================================================
 
 backBtn.addEventListener(
@@ -213,10 +216,6 @@ backBtn.addEventListener(
 );
 
 
-// ======================================================
-// JOIN → HOME
-// ======================================================
-
 joinBackBtn.addEventListener(
     "click",
     function () {
@@ -226,10 +225,6 @@ joinBackBtn.addEventListener(
     }
 );
 
-
-// ======================================================
-// TRACKING → HOME
-// ======================================================
 
 trackingHomeBtn.addEventListener(
     "click",
@@ -278,31 +273,41 @@ generateBtn.addEventListener(
     async function () {
 
         const yourName =
-            document.getElementById("yourName")
-                .value
-                .trim();
+            document.getElementById(
+                "yourName"
+            )
+            .value
+            .trim();
 
 
         const eventName =
-            document.getElementById("eventName")
-                .value
-                .trim();
+            document.getElementById(
+                "eventName"
+            )
+            .value
+            .trim();
 
 
         const destination =
-            document.getElementById("destination")
-                .value
-                .trim();
+            document.getElementById(
+                "destination"
+            )
+            .value
+            .trim();
 
 
         const eventDate =
-            document.getElementById("eventDate")
-                .value;
+            document.getElementById(
+                "eventDate"
+            )
+            .value;
 
 
         const eventTime =
-            document.getElementById("eventTime")
-                .value;
+            document.getElementById(
+                "eventTime"
+            )
+            .value;
 
 
         // CHECK FIELDS
@@ -366,6 +371,12 @@ generateBtn.addEventListener(
                         time:
                             eventTime,
 
+                        // IMPORTANT
+                        // Creator is the first member
+
+                        members:
+                            [yourName],
+
                         createdAt:
                             new Date()
 
@@ -402,7 +413,10 @@ generateBtn.addEventListener(
                     eventDate,
 
                 time:
-                    eventTime
+                    eventTime,
+
+                members:
+                    [yourName]
 
             };
 
@@ -427,7 +441,7 @@ generateBtn.addEventListener(
                 eventCode;
 
 
-            // TRACKING DETAILS
+            // TRACKING
 
             document.getElementById(
                 "trackingEventName"
@@ -460,7 +474,7 @@ generateBtn.addEventListener(
         catch (error) {
 
             console.error(
-                "CREATE EVENT ERROR:",
+                "CREATE ERROR:",
                 error
             );
 
@@ -508,10 +522,10 @@ copyBtn.addEventListener(
 
         }
 
-        catch (error) {
+        catch {
 
             alert(
-                "Your Event Code is:\n\n" +
+                "Event Code:\n\n" +
                 code
             );
 
@@ -568,9 +582,7 @@ homeBtn.addEventListener(
     "click",
     function () {
 
-        showPage(
-            homePage
-        );
+        showPage(homePage);
 
     }
 );
@@ -583,10 +595,6 @@ homeBtn.addEventListener(
 joinSubmitBtn.addEventListener(
     "click",
     async function () {
-
-        // ----------------------------------------------
-        // GET INPUTS
-        // ----------------------------------------------
 
         const joinCode =
             document.getElementById(
@@ -605,9 +613,7 @@ joinSubmitBtn.addEventListener(
             .trim();
 
 
-        // ----------------------------------------------
         // VALIDATION
-        // ----------------------------------------------
 
         if (joinCode === "") {
 
@@ -642,9 +648,7 @@ joinSubmitBtn.addEventListener(
         }
 
 
-        // ----------------------------------------------
-        // BUTTON LOADING
-        // ----------------------------------------------
+        // LOADING
 
         joinSubmitBtn.disabled = true;
 
@@ -655,14 +659,8 @@ joinSubmitBtn.addEventListener(
         try {
 
             // ==========================================
-            // SEARCH EVENT
+            // FIND EVENT
             // ==========================================
-
-            console.log(
-                "Searching for:",
-                joinCode
-            );
-
 
             const eventsRef =
                 collection(
@@ -688,9 +686,7 @@ joinSubmitBtn.addEventListener(
                 );
 
 
-            // ==========================================
             // EVENT NOT FOUND
-            // ==========================================
 
             if (
                 querySnapshot.empty
@@ -725,65 +721,45 @@ joinSubmitBtn.addEventListener(
 
 
             // ==========================================
-            // MEMBER SUBCOLLECTION
+            // UPDATE EVENT
             // ==========================================
 
-            const membersRef =
-                collection(
+            const eventRef =
+                doc(
                     db,
                     "events",
-                    eventDoc.id,
-                    "members"
+                    eventDoc.id
                 );
 
 
-            console.log(
-                "Saving member..."
+            await updateDoc(
+                eventRef,
+                {
+
+                    members:
+                        arrayUnion(joinName)
+
+                }
             );
 
-
-            // ==========================================
-            // SAVE MEMBER
-            // ==========================================
-
-            const memberDoc =
-                await addDoc(
-                    membersRef,
-                    {
-
-                        name:
-                            joinName,
-
-                        online:
-                            true,
-
-                        joinedAt:
-                            new Date()
-
-                    }
-                );
-
-
-            // ==========================================
-            // MEMBER SAVED
-            // ==========================================
 
             console.log(
                 "MEMBER SAVED:",
-                memberDoc.id
-            );
-
-
-            alert(
-                "🔥 MEMBER SAVED TO FIREBASE!\n\n" +
-                "Name: " +
                 joinName
             );
 
 
             // ==========================================
-            // CURRENT EVENT
+            // UPDATE CURRENT EVENT
             // ==========================================
+
+            const existingMembers =
+                Array.isArray(
+                    eventData.members
+                )
+                    ? eventData.members
+                    : [];
+
 
             currentEvent = {
 
@@ -808,6 +784,16 @@ joinSubmitBtn.addEventListener(
                 time:
                     eventData.time,
 
+                members:
+                    [
+                        ...new Set(
+                            [
+                                ...existingMembers,
+                                joinName
+                            ]
+                        )
+                    ],
+
                 joinedAs:
                     joinName
 
@@ -815,7 +801,7 @@ joinSubmitBtn.addEventListener(
 
 
             // ==========================================
-            // TRACKING PAGE
+            // UPDATE TRACKING PAGE
             // ==========================================
 
             document.getElementById(
@@ -830,39 +816,155 @@ joinSubmitBtn.addEventListener(
                 eventData.destination;
 
 
+            // ==========================================
+            // SHOW MEMBERS
+            // ==========================================
+
+            displayMembers(
+                currentEvent.members
+            );
+
+
+            // ==========================================
+            // OPEN TRACKING
+            // ==========================================
+
             showPage(
                 trackingPage
+            );
+
+
+            alert(
+                "✅ Successfully joined!\n\n" +
+                joinName +
+                " was added to the group."
             );
 
         }
 
         catch (error) {
 
-            // ==========================================
-            // ERROR
-            // ==========================================
-
             console.error(
-                "MEMBER SAVE ERROR:",
+                "JOIN ERROR:",
                 error
             );
 
 
             alert(
-                "❌ MEMBER SAVE ERROR\n\n" +
+                "❌ Firebase Error:\n\n" +
                 error.message
             );
 
         }
 
-        finally {
 
-            joinSubmitBtn.disabled = false;
+        joinSubmitBtn.disabled = false;
 
-            joinSubmitBtn.textContent =
-                "Join Event 👥";
-
-        }
+        joinSubmitBtn.textContent =
+            "Join Event 👥";
 
     }
 );
+
+
+// ======================================================
+// DISPLAY MEMBERS
+// ======================================================
+
+function displayMembers(
+    members
+) {
+
+    const membersList =
+        document.getElementById(
+            "membersList"
+        );
+
+
+    if (!membersList) {
+
+        return;
+
+    }
+
+
+    membersList.innerHTML = "";
+
+
+    if (
+        !members ||
+        members.length === 0
+    ) {
+
+        membersList.innerHTML = `
+
+            <div class="member">
+
+                <span>
+                    👥 No members yet
+                </span>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    members.forEach(
+        function (name) {
+
+            const member =
+                document.createElement(
+                    "div"
+                );
+
+
+            member.className =
+                "member";
+
+
+            member.innerHTML = `
+
+                <span>
+                    👤 ${escapeHTML(name)}
+                </span>
+
+                <span>
+                    🟢 Online
+                </span>
+
+            `;
+
+
+            membersList.appendChild(
+                member
+            );
+
+        }
+    );
+
+}
+
+
+// ======================================================
+// SAFE HTML
+// ======================================================
+
+function escapeHTML(
+    text
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        text;
+
+    return div.innerHTML;
+
+}
