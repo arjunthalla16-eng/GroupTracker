@@ -1,4 +1,10 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+// ======================================================
+// FIREBASE IMPORTS
+// ======================================================
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 
 import {
     getFirestore,
@@ -7,141 +13,217 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
 
-// ========================================
-// FIREBASE
-// ========================================
+// ======================================================
+// FIREBASE CONFIG
+// ======================================================
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBNjGzWkElpvkcT2AzAg_lRGYRNlAjrZbA",
-    authDomain: "grouptracker-16b46.firebaseapp.com",
-    projectId: "grouptracker-16b46",
-    storageBucket: "grouptracker-16b46.firebasestorage.app",
-    messagingSenderId: "327640725117",
-    appId: "1:327640725117:web:88971ecf02a3949fa62314"
+
+    apiKey:
+        "AIzaSyBNjGzWkElpvkcT2AzAg_lRGYRNlAjrZbA",
+
+    authDomain:
+        "grouptracker-16b46.firebaseapp.com",
+
+    projectId:
+        "grouptracker-16b46",
+
+    storageBucket:
+        "grouptracker-16b46.firebasestorage.app",
+
+    messagingSenderId:
+        "327640725117",
+
+    appId:
+        "1:327640725117:web:88971ecf02a3949fa62314"
+
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+
+// ======================================================
+// INITIALIZE FIREBASE
+// ======================================================
+
+const app =
+    initializeApp(firebaseConfig);
+
+const db =
+    getFirestore(app);
 
 
-// ========================================
-// PAGES
-// ========================================
+// ======================================================
+// PAGE ELEMENTS
+// ======================================================
 
-const homePage = document.getElementById("homePage");
-const createPage = document.getElementById("createPage");
-const eventCreatedPage = document.getElementById("eventCreatedPage");
-const joinPage = document.getElementById("joinPage");
-const trackingPage = document.getElementById("trackingPage");
+const homePage =
+    document.getElementById("homePage");
 
+const createPage =
+    document.getElementById("createPage");
 
-// ========================================
-// BUTTONS
-// ========================================
+const eventCreatedPage =
+    document.getElementById("eventCreatedPage");
 
-const createBtn = document.getElementById("createBtn");
-const joinBtn = document.getElementById("joinBtn");
-const generateBtn = document.getElementById("generateBtn");
+const joinPage =
+    document.getElementById("joinPage");
 
-const backBtn = document.getElementById("backBtn");
-const joinBackBtn = document.getElementById("joinBackBtn");
-
-const copyBtn = document.getElementById("copyBtn");
-const trackingBtn = document.getElementById("trackingBtn");
-
-const homeBtn = document.getElementById("homeBtn");
-const joinSubmitBtn = document.getElementById("joinSubmitBtn");
-const trackingHomeBtn = document.getElementById("trackingHomeBtn");
+const trackingPage =
+    document.getElementById("trackingPage");
 
 
-// ========================================
+// ======================================================
+// BUTTON ELEMENTS
+// ======================================================
+
+const createBtn =
+    document.getElementById("createBtn");
+
+const joinBtn =
+    document.getElementById("joinBtn");
+
+const generateBtn =
+    document.getElementById("generateBtn");
+
+const backBtn =
+    document.getElementById("backBtn");
+
+const joinBackBtn =
+    document.getElementById("joinBackBtn");
+
+const copyBtn =
+    document.getElementById("copyBtn");
+
+const trackingBtn =
+    document.getElementById("trackingBtn");
+
+const homeBtn =
+    document.getElementById("homeBtn");
+
+const joinSubmitBtn =
+    document.getElementById("joinSubmitBtn");
+
+const trackingHomeBtn =
+    document.getElementById("trackingHomeBtn");
+
+
+// ======================================================
 // CURRENT EVENT
-// ========================================
+// ======================================================
 
 let currentEvent = null;
 
 
-// ========================================
+// ======================================================
 // SHOW PAGE
-// ========================================
+// ======================================================
 
 function showPage(page) {
 
     homePage.classList.add("hidden");
+
     createPage.classList.add("hidden");
+
     eventCreatedPage.classList.add("hidden");
+
     joinPage.classList.add("hidden");
+
     trackingPage.classList.add("hidden");
 
     page.classList.remove("hidden");
+
 }
 
 
-// ========================================
+// ======================================================
 // CLEAR CREATE FORM
-// ========================================
+// ======================================================
 
 function clearCreateForm() {
 
-    document.getElementById("yourName").value = "";
-    document.getElementById("eventName").value = "";
-    document.getElementById("destination").value = "";
-    document.getElementById("eventDate").value = "";
-    document.getElementById("eventTime").value = "";
+    document.getElementById(
+        "yourName"
+    ).value = "";
+
+    document.getElementById(
+        "eventName"
+    ).value = "";
+
+    document.getElementById(
+        "destination"
+    ).value = "";
+
+    document.getElementById(
+        "eventDate"
+    ).value = "";
+
+    document.getElementById(
+        "eventTime"
+    ).value = "";
 
 }
 
 
-// ========================================
+// ======================================================
 // HOME → CREATE
-// ========================================
+// ======================================================
 
-createBtn.addEventListener("click", function () {
+createBtn.addEventListener(
+    "click",
+    function () {
 
-    // Clear old information
-    clearCreateForm();
+        clearCreateForm();
 
-    showPage(createPage);
+        showPage(createPage);
 
-});
+    }
+);
 
 
-// ========================================
+// ======================================================
 // HOME → JOIN
-// ========================================
+// ======================================================
 
-joinBtn.addEventListener("click", function () {
+joinBtn.addEventListener(
+    "click",
+    function () {
 
-    showPage(joinPage);
+        showPage(joinPage);
 
-});
+    }
+);
 
 
-// ========================================
+// ======================================================
 // CREATE → HOME
-// ========================================
+// ======================================================
 
-backBtn.addEventListener("click", function () {
+backBtn.addEventListener(
+    "click",
+    function () {
 
-    showPage(homePage);
+        showPage(homePage);
 
-});
+    }
+);
 
 
-// ========================================
+// ======================================================
 // JOIN → HOME
-// ========================================
+// ======================================================
 
-joinBackBtn.addEventListener("click", function () {
+joinBackBtn.addEventListener(
+    "click",
+    function () {
 
-    showPage(homePage);
+        showPage(homePage);
 
-});
+    }
+);
 
 
-// ========================================
+// ======================================================
 // GENERATE EVENT CODE
-// ========================================
+// ======================================================
 
 function generateEventCode() {
 
@@ -150,55 +232,73 @@ function generateEventCode() {
 
     let code = "";
 
-    for (let i = 0; i < 6; i++) {
+    for (
+        let i = 0;
+        i < 6;
+        i++
+    ) {
 
         const randomIndex =
             Math.floor(
-                Math.random() * characters.length
+                Math.random() *
+                characters.length
             );
 
-        code += characters[randomIndex];
+        code +=
+            characters[randomIndex];
+
     }
 
     return code;
+
 }
 
 
-// ========================================
+// ======================================================
 // CREATE EVENT
-// ========================================
+// ======================================================
 
 generateBtn.addEventListener(
     "click",
     async function () {
 
+        // ----------------------------------------------
+        // GET FORM VALUES
+        // ----------------------------------------------
+
         const yourName =
-            document.getElementById("yourName")
-                .value
-                .trim();
+            document.getElementById(
+                "yourName"
+            ).value.trim();
+
 
         const eventName =
-            document.getElementById("eventName")
-                .value
-                .trim();
+            document.getElementById(
+                "eventName"
+            ).value.trim();
+
 
         const destination =
-            document.getElementById("destination")
-                .value
-                .trim();
+            document.getElementById(
+                "destination"
+            ).value.trim();
+
 
         const eventDate =
-            document.getElementById("eventDate")
-                .value;
+            document.getElementById(
+                "eventDate"
+            ).value;
+
 
         const eventTime =
-            document.getElementById("eventTime")
-                .value;
+            document.getElementById(
+                "eventTime"
+            ).value;
 
 
-        // ====================================
-        // CHECK FIELDS
-        // ====================================
+        // ----------------------------------------------
+        // VALIDATE
+        // ----------------------------------------------
 
         if (
             yourName === "" ||
@@ -213,123 +313,171 @@ generateBtn.addEventListener(
             );
 
             return;
+
         }
 
 
-        // ====================================
-        // GENERATE NEW CODE
-        // ====================================
+        // ----------------------------------------------
+        // CREATE UNIQUE CODE
+        // ----------------------------------------------
 
         const eventCode =
             generateEventCode();
 
 
+        // ----------------------------------------------
+        // DISABLE BUTTON
+        // ----------------------------------------------
+
+        generateBtn.disabled = true;
+
+        generateBtn.textContent =
+            "Creating Event...";
+
+
         try {
 
-            // ====================================
-            // SAVE NEW EVENT TO FIRESTORE
-            // ====================================
+            // ------------------------------------------
+            // SAVE TO FIRESTORE
+            // ------------------------------------------
 
-            const docRef = await addDoc(
-                collection(db, "events"),
-                {
+            const docRef =
+                await addDoc(
+                    collection(
+                        db,
+                        "events"
+                    ),
+                    {
 
-                    code: eventCode,
+                        code:
+                            eventCode,
 
-                    creator: yourName,
+                        creator:
+                            yourName,
 
-                    eventName: eventName,
+                        eventName:
+                            eventName,
 
-                    destination: destination,
+                        destination:
+                            destination,
 
-                    date: eventDate,
+                        date:
+                            eventDate,
 
-                    time: eventTime,
+                        time:
+                            eventTime,
 
-                    createdAt: new Date()
+                        createdAt:
+                            new Date()
 
-                }
-            );
+                    }
+                );
 
+
+            // ------------------------------------------
+            // CONSOLE CONFIRMATION
+            // ------------------------------------------
 
             console.log(
-                "Event saved with ID:",
+                "Firebase document created:",
                 docRef.id
             );
 
 
-            // ====================================
-            // UPDATE CURRENT EVENT
-            // ====================================
+            // ------------------------------------------
+            // SAVE CURRENT EVENT
+            // ------------------------------------------
 
             currentEvent = {
 
-                id: docRef.id,
+                id:
+                    docRef.id,
 
-                code: eventCode,
+                code:
+                    eventCode,
 
-                creator: yourName,
+                creator:
+                    yourName,
 
-                eventName: eventName,
+                eventName:
+                    eventName,
 
-                destination: destination,
+                destination:
+                    destination,
 
-                date: eventDate,
+                date:
+                    eventDate,
 
-                time: eventTime
+                time:
+                    eventTime
 
             };
 
 
-            // ====================================
-            // UPDATE DISPLAY
-            // ====================================
+            // ------------------------------------------
+            // DISPLAY EVENT NAME
+            // ------------------------------------------
 
             document.getElementById(
                 "displayEventName"
-            ).textContent = eventName;
+            ).textContent =
+                eventName;
 
+
+            // ------------------------------------------
+            // DISPLAY DESTINATION
+            // ------------------------------------------
 
             document.getElementById(
                 "displayDestination"
-            ).textContent = destination;
+            ).textContent =
+                destination;
 
+
+            // ------------------------------------------
+            // DISPLAY EVENT CODE
+            // ------------------------------------------
 
             document.getElementById(
                 "eventCode"
-            ).textContent = eventCode;
+            ).textContent =
+                eventCode;
 
 
-            // ====================================
-            // UPDATE TRACKING PAGE
-            // ====================================
+            // ------------------------------------------
+            // UPDATE TRACKING
+            // ------------------------------------------
 
             document.getElementById(
                 "trackingEventName"
-            ).textContent = eventName;
+            ).textContent =
+                eventName;
 
 
             document.getElementById(
                 "trackingDestination"
-            ).textContent = destination;
+            ).textContent =
+                destination;
 
 
-            // ====================================
+            // ------------------------------------------
             // CLEAR FORM
-            // ====================================
+            // ------------------------------------------
 
             clearCreateForm();
 
 
-            // ====================================
-            // SHOW CREATED PAGE
-            // ====================================
+            // ------------------------------------------
+            // SHOW SUCCESS PAGE
+            // ------------------------------------------
 
-            showPage(eventCreatedPage);
+            showPage(
+                eventCreatedPage
+            );
 
 
             alert(
-                "🎉 New event created successfully!\n\n" +
+                "🎉 Event saved to Firebase!\n\n" +
                 "Event Code: " +
                 eventCode
             );
@@ -338,7 +486,10 @@ generateBtn.addEventListener(
 
         catch (error) {
 
-            console.error(error);
+            console.error(
+                "Firebase Error:",
+                error
+            );
 
             alert(
                 "❌ Firebase Error:\n\n" +
@@ -347,13 +498,23 @@ generateBtn.addEventListener(
 
         }
 
+
+        // ----------------------------------------------
+        // ENABLE BUTTON AGAIN
+        // ----------------------------------------------
+
+        generateBtn.disabled = false;
+
+        generateBtn.textContent =
+            "Create Event 🚀";
+
     }
 );
 
 
-// ========================================
+// ======================================================
 // COPY EVENT CODE
-// ========================================
+// ======================================================
 
 copyBtn.addEventListener(
     "click",
@@ -367,9 +528,8 @@ copyBtn.addEventListener(
 
         try {
 
-            await navigator.clipboard.writeText(
-                code
-            );
+            await navigator.clipboard
+                .writeText(code);
 
             alert(
                 "📋 Event code copied!"
@@ -377,10 +537,10 @@ copyBtn.addEventListener(
 
         }
 
-        catch {
+        catch (error) {
 
             alert(
-                "Event Code:\n\n" +
+                "Your Event Code is:\n\n" +
                 code
             );
 
@@ -390,9 +550,9 @@ copyBtn.addEventListener(
 );
 
 
-// ========================================
+// ======================================================
 // OPEN TRACKING
-// ========================================
+// ======================================================
 
 trackingBtn.addEventListener(
     "click",
@@ -405,6 +565,7 @@ trackingBtn.addEventListener(
             );
 
             return;
+
         }
 
 
@@ -420,51 +581,57 @@ trackingBtn.addEventListener(
             currentEvent.destination;
 
 
-        showPage(trackingPage);
-
-    }
-);
-
-
-// ========================================
-// EVENT CREATED → HOME
-// ========================================
-
-homeBtn.addEventListener(
-    "click",
-    function () {
-
-        showPage(homePage);
-
-    }
-);
-
-
-// ========================================
-// JOIN EVENT — TEMPORARY
-// ========================================
-
-joinSubmitBtn.addEventListener(
-    "click",
-    function () {
-
-        alert(
-            "Join Event Firebase search is the next step! 👥"
+        showPage(
+            trackingPage
         );
 
     }
 );
 
 
-// ========================================
+// ======================================================
+// EVENT CREATED → HOME
+// ======================================================
+
+homeBtn.addEventListener(
+    "click",
+    function () {
+
+        showPage(
+            homePage
+        );
+
+    }
+);
+
+
+// ======================================================
+// JOIN EVENT
+// ======================================================
+
+joinSubmitBtn.addEventListener(
+    "click",
+    function () {
+
+        alert(
+            "👥 Join Event is ready for Firebase search next!"
+        );
+
+    }
+);
+
+
+// ======================================================
 // TRACKING → HOME
-// ========================================
+// ======================================================
 
 trackingHomeBtn.addEventListener(
     "click",
     function () {
 
-        showPage(homePage);
+        showPage(
+            homePage
+        );
 
     }
 );
