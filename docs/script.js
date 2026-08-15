@@ -158,7 +158,7 @@ joinBtn.addEventListener("click", function () {
 
 
 // ======================================================
-// BACK BUTTONS
+// BACK
 // ======================================================
 
 backBtn.addEventListener("click", function () {
@@ -251,6 +251,7 @@ generateBtn.addEventListener(
             alert("Please fill all the fields.");
 
             return;
+
         }
 
 
@@ -287,12 +288,6 @@ generateBtn.addEventListener(
 
                     }
                 );
-
-
-            console.log(
-                "Event created:",
-                docRef.id
-            );
 
 
             currentEvent = {
@@ -374,7 +369,7 @@ generateBtn.addEventListener(
 
 
 // ======================================================
-// COPY EVENT CODE
+// COPY CODE
 // ======================================================
 
 copyBtn.addEventListener(
@@ -400,7 +395,7 @@ copyBtn.addEventListener(
         catch {
 
             alert(
-                "Your Event Code is:\n\n" +
+                "Event Code:\n\n" +
                 code
             );
 
@@ -423,6 +418,7 @@ trackingBtn.addEventListener(
             alert("No event found.");
 
             return;
+
         }
 
 
@@ -459,7 +455,7 @@ homeBtn.addEventListener(
 
 
 // ======================================================
-// JOIN EVENT → FIRESTORE SEARCH
+// JOIN EVENT + SAVE MEMBER
 // ======================================================
 
 joinSubmitBtn.addEventListener(
@@ -481,7 +477,9 @@ joinSubmitBtn.addEventListener(
             .trim();
 
 
-        // CHECK INPUTS
+        // ----------------------------------------------
+        // VALIDATION
+        // ----------------------------------------------
 
         if (joinCode === "") {
 
@@ -490,6 +488,7 @@ joinSubmitBtn.addEventListener(
             );
 
             return;
+
         }
 
 
@@ -500,6 +499,7 @@ joinSubmitBtn.addEventListener(
             );
 
             return;
+
         }
 
 
@@ -510,21 +510,24 @@ joinSubmitBtn.addEventListener(
             );
 
             return;
+
         }
 
 
-        // DISABLE BUTTON
+        // ----------------------------------------------
+        // BUTTON LOADING
+        // ----------------------------------------------
 
         joinSubmitBtn.disabled = true;
 
         joinSubmitBtn.textContent =
-            "Searching...";
+            "Joining...";
 
 
         try {
 
             // ==========================================
-            // SEARCH FIRESTORE
+            // FIND EVENT
             // ==========================================
 
             const eventsRef =
@@ -558,33 +561,56 @@ joinSubmitBtn.addEventListener(
                 );
 
                 return;
+
             }
 
 
             // ==========================================
-            // EVENT FOUND
+            // GET EVENT
             // ==========================================
 
-            let foundEvent = null;
+            let eventDoc = null;
 
             querySnapshot.forEach(
                 function (doc) {
 
-                    foundEvent = {
-
-                        id: doc.id,
-
-                        ...doc.data()
-
-                    };
+                    eventDoc = doc;
 
                 }
             );
 
 
-            console.log(
-                "Event found:",
-                foundEvent
+            const eventData =
+                eventDoc.data();
+
+
+            // ==========================================
+            // SAVE MEMBER
+            // ==========================================
+
+            const membersRef =
+                collection(
+                    db,
+                    "events",
+                    eventDoc.id,
+                    "members"
+                );
+
+
+            await addDoc(
+                membersRef,
+                {
+
+                    name:
+                        joinName,
+
+                    joinedAt:
+                        new Date(),
+
+                    online:
+                        true
+
+                }
             );
 
 
@@ -594,38 +620,58 @@ joinSubmitBtn.addEventListener(
 
             currentEvent = {
 
-                ...foundEvent,
+                id:
+                    eventDoc.id,
 
-                joinedAs: joinName
+                code:
+                    eventData.code,
+
+                creator:
+                    eventData.creator,
+
+                eventName:
+                    eventData.eventName,
+
+                destination:
+                    eventData.destination,
+
+                date:
+                    eventData.date,
+
+                time:
+                    eventData.time,
+
+                joinedAs:
+                    joinName
 
             };
 
 
             // ==========================================
-            // UPDATE TRACKING PAGE
+            // UPDATE TRACKING
             // ==========================================
 
             document.getElementById(
                 "trackingEventName"
             ).textContent =
-                foundEvent.eventName;
+                eventData.eventName;
 
 
             document.getElementById(
                 "trackingDestination"
             ).textContent =
-                foundEvent.destination;
+                eventData.destination;
 
 
             // ==========================================
-            // SHOW TRACKING PAGE
+            // OPEN TRACKING
             // ==========================================
 
             showPage(trackingPage);
 
 
             alert(
-                "✅ Event found!\n\n" +
+                "✅ Successfully joined!\n\n" +
                 "Welcome, " +
                 joinName +
                 "!"
@@ -636,7 +682,7 @@ joinSubmitBtn.addEventListener(
         catch (error) {
 
             console.error(
-                "Join Event Error:",
+                "Join error:",
                 error
             );
 
