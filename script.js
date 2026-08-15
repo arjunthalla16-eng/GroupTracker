@@ -3,7 +3,12 @@ content://com.android.externalstorage.documents/tree/primary%3ADownload%2FRC24::
 import {
     getFirestore,
     collection,
-    addDoc
+    addDoc,
+    query,
+
+where,
+
+getDocs
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
 
