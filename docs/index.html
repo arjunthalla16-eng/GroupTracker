@@ -7,14 +7,15 @@
 
     <title>GroupTracker</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=6">
 </head>
 
 <body>
 
     <div class="container">
 
-        <!-- HOME PAGE -->
+        <!-- ================= HOME ================= -->
+
         <div id="homePage">
 
             <div class="logo">
@@ -36,11 +37,17 @@
                     share their live location with the group.
                 </p>
 
-                <button id="createBtn" class="create-btn">
+                <button
+                    id="createBtn"
+                    class="create-btn"
+                    type="button">
                     Create Event
                 </button>
 
-                <button id="joinBtn" class="join-btn">
+                <button
+                    id="joinBtn"
+                    class="join-btn"
+                    type="button">
                     Join Event
                 </button>
 
@@ -53,7 +60,8 @@
         </div>
 
 
-        <!-- CREATE EVENT PAGE -->
+        <!-- ================= CREATE PAGE ================= -->
+
         <div id="createPage" class="hidden">
 
             <div class="top-icon">
@@ -75,8 +83,7 @@
                 <input
                     type="text"
                     id="yourName"
-                    placeholder="Enter your name"
-                >
+                    placeholder="Enter your name">
 
                 <label for="eventName">
                     Event Name
@@ -85,8 +92,7 @@
                 <input
                     type="text"
                     id="eventName"
-                    placeholder="Example: Wedding"
-                >
+                    placeholder="Example: Wedding">
 
                 <label for="destination">
                     Destination
@@ -95,8 +101,7 @@
                 <input
                     type="text"
                     id="destination"
-                    placeholder="Example: Hyderabad"
-                >
+                    placeholder="Example: Hyderabad">
 
                 <label for="eventDate">
                     Date
@@ -104,8 +109,7 @@
 
                 <input
                     type="date"
-                    id="eventDate"
-                >
+                    id="eventDate">
 
                 <label for="eventTime">
                     Time
@@ -113,22 +117,19 @@
 
                 <input
                     type="time"
-                    id="eventTime"
-                >
+                    id="eventTime">
 
                 <button
                     id="generateBtn"
                     class="create-btn"
-                    type="button"
-                >
+                    type="button">
                     Create Event 🚀
                 </button>
 
                 <button
                     id="backBtn"
                     class="back-btn"
-                    type="button"
-                >
+                    type="button">
                     ← Back
                 </button>
 
@@ -137,7 +138,8 @@
         </div>
 
 
-        <!-- EVENT CREATED PAGE -->
+        <!-- ================= EVENT CREATED ================= -->
+
         <div id="eventCreatedPage" class="hidden">
 
             <div class="success-icon">
@@ -153,7 +155,7 @@
             <div class="event-card">
 
                 <h2 id="displayEventName">
-                    Wedding
+                    Event
                 </h2>
 
                 <p class="destination-text">
@@ -174,24 +176,21 @@
                 <button
                     id="copyBtn"
                     class="create-btn"
-                    type="button"
-                >
+                    type="button">
                     📋 Copy Event Code
                 </button>
 
                 <button
                     id="trackingBtn"
                     class="tracking-btn"
-                    type="button"
-                >
+                    type="button">
                     🗺️ Open Tracking
                 </button>
 
                 <button
                     id="homeBtn"
                     class="back-btn"
-                    type="button"
-                >
+                    type="button">
                     ← Home
                 </button>
 
@@ -200,7 +199,8 @@
         </div>
 
 
-        <!-- JOIN PAGE -->
+        <!-- ================= JOIN PAGE ================= -->
+
         <div id="joinPage" class="hidden">
 
             <div class="top-icon">
@@ -223,8 +223,7 @@
                     type="text"
                     id="joinCode"
                     placeholder="Example: ABC123"
-                    maxlength="6"
-                >
+                    maxlength="6">
 
                 <label for="joinName">
                     Your Name
@@ -233,22 +232,19 @@
                 <input
                     type="text"
                     id="joinName"
-                    placeholder="Enter your name"
-                >
+                    placeholder="Enter your name">
 
                 <button
                     id="joinSubmitBtn"
                     class="create-btn"
-                    type="button"
-                >
+                    type="button">
                     Join Event 👥
                 </button>
 
                 <button
                     id="joinBackBtn"
                     class="back-btn"
-                    type="button"
-                >
+                    type="button">
                     ← Back
                 </button>
 
@@ -257,7 +253,8 @@
         </div>
 
 
-        <!-- TRACKING PAGE -->
+        <!-- ================= TRACKING PAGE ================= -->
+
         <div id="trackingPage" class="hidden">
 
             <div class="top-icon">
@@ -273,7 +270,7 @@
             <div class="tracking-card">
 
                 <h2 id="trackingEventName">
-                    Wedding
+                    Event
                 </h2>
 
                 <p>
@@ -298,8 +295,15 @@
                 <div id="membersList">
 
                     <div class="member">
-                        <span>👤 You</span>
-                        <span>🟢 Online</span>
+
+                        <span>
+                            👤 You
+                        </span>
+
+                        <span>
+                            🟢 Online
+                        </span>
+
                     </div>
 
                 </div>
@@ -307,8 +311,7 @@
                 <button
                     id="trackingHomeBtn"
                     class="back-btn"
-                    type="button"
-                >
+                    type="button">
                     ← Home
                 </button>
 
@@ -319,8 +322,13 @@
     </div>
 
 
-    <!-- IMPORTANT: Normal JavaScript, NOT module -->
-    <script src="script.js?v=5"></script>
+    <!-- IMPORTANT -->
+    <!-- Firebase requires module -->
+
+    <script
+        type="module"
+        src="script.js?v=6">
+    </script>
 
 </body>
 
