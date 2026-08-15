@@ -1,0 +1,310 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(
+        135deg,
+        #667eea,
+        #764ba2
+    );
+
+    color: #222;
+
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 430px;
+
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+
+/* HOME */
+
+.logo {
+    width: 75px;
+    height: 75px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: white;
+
+    border-radius: 50%;
+
+    font-size: 38px;
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    color: white;
+
+    font-size: 34px;
+
+    margin-bottom: 8px;
+}
+
+.tagline {
+    color: #eeeeee;
+
+    font-size: 15px;
+
+    margin-bottom: 25px;
+}
+
+
+/* CARD */
+
+.card,
+.form-card,
+.event-card,
+.tracking-card {
+    background: white;
+
+    padding: 30px 25px;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.card h2 {
+    font-size: 24px;
+
+    margin-bottom: 12px;
+}
+
+.card p {
+    color: #666;
+
+    line-height: 1.5;
+
+    margin-bottom: 20px;
+}
+
+
+/* BUTTONS */
+
+button {
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    margin-top: 10px;
+}
+
+.create-btn {
+    background: #667eea;
+
+    color: white;
+}
+
+.join-btn {
+    background: #eeeeee;
+
+    color: #333;
+}
+
+.back-btn {
+    background: #eeeeee;
+
+    color: #333;
+}
+
+.tracking-btn {
+    background: #222;
+
+    color: white;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+
+/* FORM */
+
+.top-icon,
+.success-icon {
+    font-size: 50px;
+
+    margin-bottom: 10px;
+}
+
+.form-card {
+    text-align: left;
+}
+
+label {
+    display: block;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-top: 15px;
+
+    margin-bottom: 7px;
+}
+
+input {
+    width: 100%;
+
+    padding: 13px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 9px;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+input:focus {
+    border: 2px solid #667eea;
+}
+
+
+/* CREATED EVENT */
+
+.event-card h2 {
+    margin-bottom: 10px;
+}
+
+.destination-text {
+    color: #666;
+
+    margin-bottom: 20px;
+}
+
+.code-box {
+    background: #f1f3ff;
+
+    padding: 20px;
+
+    border-radius: 12px;
+
+    margin-bottom: 15px;
+}
+
+.code-box p {
+    font-size: 12px;
+
+    color: #777;
+
+    margin-bottom: 8px;
+}
+
+.code-box h2 {
+    font-size: 32px;
+
+    letter-spacing: 5px;
+
+    color: #667eea;
+}
+
+
+/* TRACKING */
+
+.tracking-card h2 {
+    margin-bottom: 8px;
+}
+
+.tracking-card > p {
+    color: #666;
+
+    margin-bottom: 20px;
+}
+
+.map-placeholder {
+    height: 220px;
+
+    border-radius: 15px;
+
+    background: #e8e8e8;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    font-size: 50px;
+
+    margin-bottom: 20px;
+}
+
+.map-placeholder p {
+    font-size: 14px;
+
+    color: #666;
+
+    margin-top: 10px;
+}
+
+.tracking-card h3 {
+    text-align: left;
+
+    margin-bottom: 10px;
+}
+
+.member {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 13px;
+
+    background: #f5f5f5;
+
+    border-radius: 8px;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+}
+
+
+/* FOOTER */
+
+.footer {
+    color: #eeeeee;
+
+    margin-top: 25px;
+
+    font-size: 13px;
+}

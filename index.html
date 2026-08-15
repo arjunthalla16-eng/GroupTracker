@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GroupTracker</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- HOME PAGE -->
+        <div id="homePage">
+
+            <div class="logo">
+                📍
+            </div>
+
+            <h1>GroupTracker</h1>
+
+            <p class="tagline">
+                Know where everyone is.
+            </p>
+
+            <div class="card">
+
+                <h2>Track Your Group</h2>
+
+                <p>
+                    Create an event and let your friends
+                    share their live location with the group.
+                </p>
+
+                <button id="createBtn" class="create-btn">
+                    Create Event
+                </button>
+
+                <button id="joinBtn" class="join-btn">
+                    Join Event
+                </button>
+
+            </div>
+
+            <p class="footer">
+                Simple • Live • Together
+            </p>
+
+        </div>
+
+
+        <!-- CREATE EVENT PAGE -->
+        <div id="createPage" class="hidden">
+
+            <div class="top-icon">
+                🎉
+            </div>
+
+            <h1>Create Event</h1>
+
+            <p class="tagline">
+                Start your group tracking session
+            </p>
+
+            <div class="form-card">
+
+                <label for="yourName">
+                    Your Name
+                </label>
+
+                <input
+                    type="text"
+                    id="yourName"
+                    placeholder="Enter your name"
+                >
+
+
+                <label for="eventName">
+                    Event Name
+                </label>
+
+                <input
+                    type="text"
+                    id="eventName"
+                    placeholder="Example: Wedding"
+                >
+
+
+                <label for="destination">
+                    Destination
+                </label>
+
+                <input
+                    type="text"
+                    id="destination"
+                    placeholder="Example: Hyderabad"
+                >
+
+
+                <label for="eventDate">
+                    Date
+                </label>
+
+                <input
+                    type="date"
+                    id="eventDate"
+                >
+
+
+                <label for="eventTime">
+                    Time
+                </label>
+
+                <input
+                    type="time"
+                    id="eventTime"
+                >
+
+
+                <button
+                    id="generateBtn"
+                    class="create-btn"
+                >
+                    Create Event 🚀
+                </button>
+
+
+                <button
+                    id="backBtn"
+                    class="back-btn"
+                >
+                    ← Back
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- EVENT CREATED PAGE -->
+        <div id="eventCreatedPage" class="hidden">
+
+            <div class="success-icon">
+                ✅
+            </div>
+
+            <h1>Event Created!</h1>
+
+            <p class="tagline">
+                Share the code with your friends
+            </p>
+
+            <div class="event-card">
+
+                <h2 id="displayEventName">
+                    Wedding
+                </h2>
+
+                <p class="destination-text">
+                    📍 <span id="displayDestination"></span>
+                </p>
+
+                <div class="code-box">
+
+                    <p>EVENT CODE</p>
+
+                    <h2 id="eventCode">
+                        ABC123
+                    </h2>
+
+                </div>
+
+                <button
+                    id="copyBtn"
+                    class="create-btn"
+                >
+                    📋 Copy Event Code
+                </button>
+
+                <button
+                    id="trackingBtn"
+                    class="tracking-btn"
+                >
+                    🗺️ Open Tracking
+                </button>
+
+                <button
+                    id="homeBtn"
+                    class="back-btn"
+                >
+                    ← Home
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- JOIN PAGE -->
+        <div id="joinPage" class="hidden">
+
+            <div class="top-icon">
+                👥
+            </div>
+
+            <h1>Join Event</h1>
+
+            <p class="tagline">
+                Enter the event code shared by your friend
+            </p>
+
+            <div class="form-card">
+
+                <label for="joinCode">
+                    Event Code
+                </label>
+
+                <input
+                    type="text"
+                    id="joinCode"
+                    placeholder="Example: ABC123"
+                    maxlength="6"
+                >
+
+                <label for="joinName">
+                    Your Name
+                </label>
+
+                <input
+                    type="text"
+                    id="joinName"
+                    placeholder="Enter your name"
+                >
+
+                <button
+                    id="joinSubmitBtn"
+                    class="create-btn"
+                >
+                    Join Event 👥
+                </button>
+
+                <button
+                    id="joinBackBtn"
+                    class="back-btn"
+                >
+                    ← Back
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- TRACKING PAGE -->
+        <div id="trackingPage" class="hidden">
+
+            <div class="top-icon">
+                🗺️
+            </div>
+
+            <h1>Live Tracking</h1>
+
+            <p class="tagline">
+                Your group is on the way!
+            </p>
+
+            <div class="tracking-card">
+
+                <h2 id="trackingEventName">
+                    Wedding
+                </h2>
+
+                <p>
+                    📍 <span id="trackingDestination"></span>
+                </p>
+
+                <div class="map-placeholder">
+                    🗺️
+
+                    <p>
+                        Live map coming next
+                    </p>
+                </div>
+
+                <h3>
+                    👥 Group Members
+                </h3>
+
+                <div id="membersList">
+
+                    <div class="member">
+                        <span>👤 You</span>
+                        <span>🟢 Online</span>
+                    </div>
+
+                </div>
+
+                <button
+                    id="trackingHomeBtn"
+                    class="back-btn"
+                >
+                    ← Home
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script type="module" src="script.js"></script>
+
+</body>
+
+</html>
