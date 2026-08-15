@@ -1,4 +1,4 @@
-content://com.android.externalstorage.documents/tree/primary%3ADownload%2FRC24::primary:Download/RC24/05BJ/GroupTracker/script.jsimport { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 
 import {
     getFirestore,
@@ -10,9 +10,9 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
 
-// ============================
+// ========================================
 // FIREBASE
-// ============================
+// ========================================
 
 const firebaseConfig = {
     apiKey: "AIzaSyBNjGzWkElpvkcT2AzAg_lRGYRNlAjrZbA",
@@ -28,9 +28,9 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
-// ============================
+// ========================================
 // PAGES
-// ============================
+// ========================================
 
 const homePage =
     document.getElementById("homePage");
@@ -48,9 +48,9 @@ const trackingPage =
     document.getElementById("trackingPage");
 
 
-// ============================
+// ========================================
 // BUTTONS
-// ============================
+// ========================================
 
 const createBtn =
     document.getElementById("createBtn");
@@ -73,6 +73,9 @@ const trackingBtn =
 const homeBtn =
     document.getElementById("homeBtn");
 
+const joinSubmitBtn =
+    document.getElementById("joinSubmitBtn");
+
 const joinBackBtn =
     document.getElementById("joinBackBtn");
 
@@ -80,9 +83,16 @@ const trackingHomeBtn =
     document.getElementById("trackingHomeBtn");
 
 
-// ============================
+// ========================================
+// CURRENT EVENT
+// ========================================
+
+let currentEvent = null;
+
+
+// ========================================
 // SHOW PAGE
-// ============================
+// ========================================
 
 function showPage(page) {
 
@@ -96,42 +106,51 @@ function showPage(page) {
 }
 
 
-// ============================
-// HOME → CREATE
-// ============================
+// ========================================
+// CREATE EVENT BUTTON
+// ========================================
 
-content://com.android.externalstorage.documents/tree/primary%3ADownload%2FRC24::primary:Download/RC24/05BJ/GroupTracker/script.jscreateBtn.addEventListener("click", function () {
+createBtn.addEventListener(
+    "click",
+    function () {
 
-    showPage(createPage);
+        showPage(createPage);
 
-});
-
-
-// ============================
-// HOME → JOIN
-// ============================
-
-joinBtn.addEventListener("click", function () {
-
-    showPage(joinPage);
-
-});
+    }
+);
 
 
-// ============================
-// BACK
-// ============================
+// ========================================
+// JOIN EVENT BUTTON
+// ========================================
 
-backBtn.addEventListener("click", function () {
+joinBtn.addEventListener(
+    "click",
+    function () {
 
-    showPage(homePage);
+        showPage(joinPage);
 
-});
+    }
+);
 
 
-// ============================
-// GENERATE CODE
-// ============================
+// ========================================
+// BACK BUTTON
+// ========================================
+
+backBtn.addEventListener(
+    "click",
+    function () {
+
+        showPage(homePage);
+
+    }
+);
+
+
+// ========================================
+// GENERATE EVENT CODE
+// ========================================
 
 function generateEventCode() {
 
@@ -144,7 +163,8 @@ function generateEventCode() {
 
         const randomIndex =
             Math.floor(
-                Math.random() * characters.length
+                Math.random() *
+                characters.length
             );
 
         code += characters[randomIndex];
@@ -154,39 +174,44 @@ function generateEventCode() {
 }
 
 
-// ============================
+// ========================================
 // CREATE EVENT
-// ============================
+// ========================================
 
 generateBtn.addEventListener(
     "click",
     async function () {
 
         const yourName =
-            document.getElementById("yourName")
+            document
+                .getElementById("yourName")
                 .value
                 .trim();
 
         const eventName =
-            document.getElementById("eventName")
+            document
+                .getElementById("eventName")
                 .value
                 .trim();
 
         const destination =
-            document.getElementById("destination")
+            document
+                .getElementById("destination")
                 .value
                 .trim();
 
         const eventDate =
-            document.getElementById("eventDate")
+            document
+                .getElementById("eventDate")
                 .value;
 
         const eventTime =
-            document.getElementById("eventTime")
+            document
+                .getElementById("eventTime")
                 .value;
 
 
-        // Check fields
+        // CHECK ALL FIELDS
 
         if (
             yourName === "" ||
@@ -204,7 +229,7 @@ generateBtn.addEventListener(
         }
 
 
-        // Generate event code
+        // GENERATE CODE
 
         const eventCode =
             generateEventCode();
@@ -212,13 +237,14 @@ generateBtn.addEventListener(
 
         try {
 
-            // SAVE TO FIRESTORE
+            // SAVE EVENT TO FIRESTORE
 
             await addDoc(
                 collection(db, "events"),
                 {
 
-                    code: eventCode,
+                    code:
+                        eventCode,
 
                     creator:
                         yourName,
@@ -241,7 +267,31 @@ generateBtn.addEventListener(
             );
 
 
-            // Show event information
+            // STORE CURRENT EVENT
+
+            currentEvent = {
+
+                code:
+                    eventCode,
+
+                creator:
+                    yourName,
+
+                eventName:
+                    eventName,
+
+                destination:
+                    destination,
+
+                date:
+                    eventDate,
+
+                time:
+                    eventTime
+            };
+
+
+            // DISPLAY EVENT NAME
 
             document.getElementById(
                 "displayEventName"
@@ -249,11 +299,15 @@ generateBtn.addEventListener(
                 eventName;
 
 
+            // DISPLAY DESTINATION
+
             document.getElementById(
                 "displayDestination"
             ).textContent =
                 destination;
 
+
+            // DISPLAY EVENT CODE
 
             document.getElementById(
                 "eventCode"
@@ -261,13 +315,13 @@ generateBtn.addEventListener(
                 eventCode;
 
 
-            // Open success page
+            // OPEN SUCCESS PAGE
 
             showPage(eventCreatedPage);
 
 
             alert(
-                "🎉 Event successfully saved to Firebase!"
+                "🎉 Event successfully created!"
             );
 
         }
@@ -287,18 +341,18 @@ generateBtn.addEventListener(
 );
 
 
-// ============================
-// COPY CODE
-// ============================
+// ========================================
+// COPY EVENT CODE
+// ========================================
 
 copyBtn.addEventListener(
     "click",
     async function () {
 
         const code =
-            document.getElementById(
-                "eventCode"
-            ).textContent;
+            document
+                .getElementById("eventCode")
+                .textContent;
 
 
         try {
@@ -313,10 +367,10 @@ copyBtn.addEventListener(
 
         }
 
-        catch {
+        catch (error) {
 
             alert(
-                "Your Event Code is:\n\n" +
+                "Event Code:\n\n" +
                 code
             );
 
@@ -326,35 +380,197 @@ copyBtn.addEventListener(
 );
 
 
-// ============================
-// TRACKING
-// ============================
+// ========================================
+// JOIN EVENT
+// ========================================
+
+joinSubmitBtn.addEventListener(
+    "click",
+    async function () {
+
+        const code =
+            document
+                .getElementById("joinCode")
+                .value
+                .trim()
+                .toUpperCase();
+
+
+        const name =
+            document
+                .getElementById("joinName")
+                .value
+                .trim();
+
+
+        // CHECK INPUT
+
+        if (
+            code === "" ||
+            name === ""
+        ) {
+
+            alert(
+                "Please enter your name and event code."
+            );
+
+            return;
+        }
+
+
+        try {
+
+            // EVENTS COLLECTION
+
+            const eventsRef =
+                collection(
+                    db,
+                    "events"
+                );
+
+
+            // SEARCH FOR EVENT CODE
+
+            const eventQuery =
+                query(
+                    eventsRef,
+                    where(
+                        "code",
+                        "==",
+                        code
+                    )
+                );
+
+
+            const snapshot =
+                await getDocs(
+                    eventQuery
+                );
+
+
+            // EVENT NOT FOUND
+
+            if (snapshot.empty) {
+
+                alert(
+                    "❌ Event not found!\n\n" +
+                    "Please check the event code."
+                );
+
+                return;
+            }
+
+
+            // GET EVENT DOCUMENT
+
+            const eventDoc =
+                snapshot.docs[0];
+
+
+            const eventData =
+                eventDoc.data();
+
+
+            // STORE EVENT
+
+            currentEvent = {
+
+                id:
+                    eventDoc.id,
+
+                code:
+                    eventData.code,
+
+                creator:
+                    eventData.creator,
+
+                eventName:
+                    eventData.eventName,
+
+                destination:
+                    eventData.destination,
+
+                date:
+                    eventData.date,
+
+                time:
+                    eventData.time,
+
+                memberName:
+                    name
+            };
+
+
+            // DISPLAY EVENT NAME
+
+            document.getElementById(
+                "trackingEventName"
+            ).textContent =
+                eventData.eventName;
+
+
+            // DISPLAY DESTINATION
+
+            document.getElementById(
+                "trackingDestination"
+            ).textContent =
+                eventData.destination;
+
+
+            // OPEN TRACKING PAGE
+
+            showPage(trackingPage);
+
+
+            alert(
+                "✅ Successfully joined the event!"
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Could not join event.\n\n" +
+                error.message
+            );
+
+        }
+
+    }
+);
+
+
+// ========================================
+// OPEN TRACKING
+// ========================================
 
 trackingBtn.addEventListener(
     "click",
     function () {
 
-        const eventName =
-            document.getElementById(
-                "displayEventName"
-            ).textContent;
+        if (!currentEvent) {
 
-        const destination =
-            document.getElementById(
-                "displayDestination"
-            ).textContent;
+            alert(
+                "No event found."
+            );
+
+            return;
+        }
 
 
         document.getElementById(
             "trackingEventName"
         ).textContent =
-            eventName;
+            currentEvent.eventName;
 
 
         document.getElementById(
             "trackingDestination"
         ).textContent =
-            destination;
+            currentEvent.destination;
 
 
         showPage(trackingPage);
@@ -363,9 +579,9 @@ trackingBtn.addEventListener(
 );
 
 
-// ============================
-// HOME
-// ============================
+// ========================================
+// HOME BUTTON
+// ========================================
 
 homeBtn.addEventListener(
     "click",
@@ -377,9 +593,9 @@ homeBtn.addEventListener(
 );
 
 
-// ============================
-// JOIN BACK
-// ============================
+// ========================================
+// JOIN BACK BUTTON
+// ========================================
 
 joinBackBtn.addEventListener(
     "click",
@@ -391,9 +607,9 @@ joinBackBtn.addEventListener(
 );
 
 
-// ============================
-// TRACKING HOME
-// ============================
+// ========================================
+// TRACKING HOME BUTTON
+// ========================================
 
 trackingHomeBtn.addEventListener(
     "click",
