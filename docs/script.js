@@ -1,5 +1,5 @@
 // ======================================================
-// FIREBASE
+// FIREBASE IMPORTS
 // ======================================================
 
 import {
@@ -21,33 +21,59 @@ import {
 // ======================================================
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBNjGzWkElpvkcT2AzAg_lRGYRNlAjrZbA",
-    authDomain: "grouptracker-16b46.firebaseapp.com",
-    projectId: "grouptracker-16b46",
-    storageBucket: "grouptracker-16b46.firebasestorage.app",
-    messagingSenderId: "327640725117",
-    appId: "1:327640725117:web:88971ecf02a3949fa62314"
+
+    apiKey:
+        "AIzaSyBNjGzWkElpvkcT2AzAg_lRGYRNlAjrZbA",
+
+    authDomain:
+        "grouptracker-16b46.firebaseapp.com",
+
+    projectId:
+        "grouptracker-16b46",
+
+    storageBucket:
+        "grouptracker-16b46.firebasestorage.app",
+
+    messagingSenderId:
+        "327640725117",
+
+    appId:
+        "1:327640725117:web:88971ecf02a3949fa62314"
+
 };
 
+
+// ======================================================
+// INITIALIZE FIREBASE
+// ======================================================
+
 const app = initializeApp(firebaseConfig);
+
 const db = getFirestore(app);
 
 
 // ======================================================
-// PAGES
+// PAGE ELEMENTS
 // ======================================================
 
-const homePage = document.getElementById("homePage");
-const createPage = document.getElementById("createPage");
+const homePage =
+    document.getElementById("homePage");
+
+const createPage =
+    document.getElementById("createPage");
+
 const eventCreatedPage =
     document.getElementById("eventCreatedPage");
-const joinPage = document.getElementById("joinPage");
+
+const joinPage =
+    document.getElementById("joinPage");
+
 const trackingPage =
     document.getElementById("trackingPage");
 
 
 // ======================================================
-// BUTTONS
+// BUTTON ELEMENTS
 // ======================================================
 
 const createBtn =
@@ -95,12 +121,17 @@ let currentEvent = null;
 function showPage(page) {
 
     homePage.classList.add("hidden");
+
     createPage.classList.add("hidden");
+
     eventCreatedPage.classList.add("hidden");
+
     joinPage.classList.add("hidden");
+
     trackingPage.classList.add("hidden");
 
     page.classList.remove("hidden");
+
 }
 
 
@@ -111,9 +142,13 @@ function showPage(page) {
 function clearCreateForm() {
 
     document.getElementById("yourName").value = "";
+
     document.getElementById("eventName").value = "";
+
     document.getElementById("destination").value = "";
+
     document.getElementById("eventDate").value = "";
+
     document.getElementById("eventTime").value = "";
 
 }
@@ -126,6 +161,7 @@ function clearCreateForm() {
 function clearJoinForm() {
 
     document.getElementById("joinCode").value = "";
+
     document.getElementById("joinName").value = "";
 
 }
@@ -135,51 +171,74 @@ function clearJoinForm() {
 // HOME → CREATE
 // ======================================================
 
-createBtn.addEventListener("click", function () {
+createBtn.addEventListener(
+    "click",
+    function () {
 
-    clearCreateForm();
+        clearCreateForm();
 
-    showPage(createPage);
+        showPage(createPage);
 
-});
+    }
+);
 
 
 // ======================================================
 // HOME → JOIN
 // ======================================================
 
-joinBtn.addEventListener("click", function () {
+joinBtn.addEventListener(
+    "click",
+    function () {
 
-    clearJoinForm();
+        clearJoinForm();
 
-    showPage(joinPage);
+        showPage(joinPage);
 
-});
+    }
+);
 
 
 // ======================================================
-// BACK
+// CREATE → HOME
 // ======================================================
 
-backBtn.addEventListener("click", function () {
+backBtn.addEventListener(
+    "click",
+    function () {
 
-    showPage(homePage);
+        showPage(homePage);
 
-});
-
-
-joinBackBtn.addEventListener("click", function () {
-
-    showPage(homePage);
-
-});
+    }
+);
 
 
-trackingHomeBtn.addEventListener("click", function () {
+// ======================================================
+// JOIN → HOME
+// ======================================================
 
-    showPage(homePage);
+joinBackBtn.addEventListener(
+    "click",
+    function () {
 
-});
+        showPage(homePage);
+
+    }
+);
+
+
+// ======================================================
+// TRACKING → HOME
+// ======================================================
+
+trackingHomeBtn.addEventListener(
+    "click",
+    function () {
+
+        showPage(homePage);
+
+    }
+);
 
 
 // ======================================================
@@ -197,7 +256,8 @@ function generateEventCode() {
 
         const randomIndex =
             Math.floor(
-                Math.random() * characters.length
+                Math.random() *
+                characters.length
             );
 
         code += characters[randomIndex];
@@ -205,6 +265,7 @@ function generateEventCode() {
     }
 
     return code;
+
 }
 
 
@@ -221,24 +282,30 @@ generateBtn.addEventListener(
                 .value
                 .trim();
 
+
         const eventName =
             document.getElementById("eventName")
                 .value
                 .trim();
+
 
         const destination =
             document.getElementById("destination")
                 .value
                 .trim();
 
+
         const eventDate =
             document.getElementById("eventDate")
                 .value;
+
 
         const eventTime =
             document.getElementById("eventTime")
                 .value;
 
+
+        // CHECK FIELDS
 
         if (
             yourName === "" ||
@@ -248,12 +315,16 @@ generateBtn.addEventListener(
             eventTime === ""
         ) {
 
-            alert("Please fill all the fields.");
+            alert(
+                "Please fill all the fields."
+            );
 
             return;
 
         }
 
+
+        // GENERATE CODE
 
         const eventCode =
             generateEventCode();
@@ -267,80 +338,119 @@ generateBtn.addEventListener(
 
         try {
 
+            // SAVE EVENT
+
             const docRef =
                 await addDoc(
-                    collection(db, "events"),
+                    collection(
+                        db,
+                        "events"
+                    ),
                     {
 
-                        code: eventCode,
+                        code:
+                            eventCode,
 
-                        creator: yourName,
+                        creator:
+                            yourName,
 
-                        eventName: eventName,
+                        eventName:
+                            eventName,
 
-                        destination: destination,
+                        destination:
+                            destination,
 
-                        date: eventDate,
+                        date:
+                            eventDate,
 
-                        time: eventTime,
+                        time:
+                            eventTime,
 
-                        createdAt: new Date()
+                        createdAt:
+                            new Date()
 
                     }
                 );
 
 
+            console.log(
+                "EVENT CREATED:",
+                docRef.id
+            );
+
+
+            // SAVE CURRENT EVENT
+
             currentEvent = {
 
-                id: docRef.id,
+                id:
+                    docRef.id,
 
-                code: eventCode,
+                code:
+                    eventCode,
 
-                creator: yourName,
+                creator:
+                    yourName,
 
-                eventName: eventName,
+                eventName:
+                    eventName,
 
-                destination: destination,
+                destination:
+                    destination,
 
-                date: eventDate,
+                date:
+                    eventDate,
 
-                time: eventTime
+                time:
+                    eventTime
 
             };
 
 
+            // DISPLAY EVENT
+
             document.getElementById(
                 "displayEventName"
-            ).textContent = eventName;
+            ).textContent =
+                eventName;
 
 
             document.getElementById(
                 "displayDestination"
-            ).textContent = destination;
+            ).textContent =
+                destination;
 
 
             document.getElementById(
                 "eventCode"
-            ).textContent = eventCode;
+            ).textContent =
+                eventCode;
 
+
+            // TRACKING DETAILS
 
             document.getElementById(
                 "trackingEventName"
-            ).textContent = eventName;
+            ).textContent =
+                eventName;
 
 
             document.getElementById(
                 "trackingDestination"
-            ).textContent = destination;
+            ).textContent =
+                destination;
 
 
             clearCreateForm();
 
-            showPage(eventCreatedPage);
+
+            showPage(
+                eventCreatedPage
+            );
 
 
             alert(
-                "🎉 Event saved to Firebase!\n\n" +
+                "🎉 Event created successfully!\n\n" +
                 "Event Code: " +
                 eventCode
             );
@@ -349,7 +459,11 @@ generateBtn.addEventListener(
 
         catch (error) {
 
-            console.error(error);
+            console.error(
+                "CREATE EVENT ERROR:",
+                error
+            );
+
 
             alert(
                 "❌ Firebase Error:\n\n" +
@@ -369,7 +483,7 @@ generateBtn.addEventListener(
 
 
 // ======================================================
-// COPY CODE
+// COPY EVENT CODE
 // ======================================================
 
 copyBtn.addEventListener(
@@ -384,7 +498,9 @@ copyBtn.addEventListener(
 
         try {
 
-            await navigator.clipboard.writeText(code);
+            await navigator.clipboard
+                .writeText(code);
+
 
             alert(
                 "📋 Event code copied!"
@@ -392,10 +508,10 @@ copyBtn.addEventListener(
 
         }
 
-        catch {
+        catch (error) {
 
             alert(
-                "Event Code:\n\n" +
+                "Your Event Code is:\n\n" +
                 code
             );
 
@@ -406,7 +522,7 @@ copyBtn.addEventListener(
 
 
 // ======================================================
-// TRACKING
+// OPEN TRACKING
 // ======================================================
 
 trackingBtn.addEventListener(
@@ -415,7 +531,9 @@ trackingBtn.addEventListener(
 
         if (!currentEvent) {
 
-            alert("No event found.");
+            alert(
+                "No event found."
+            );
 
             return;
 
@@ -434,7 +552,9 @@ trackingBtn.addEventListener(
             currentEvent.destination;
 
 
-        showPage(trackingPage);
+        showPage(
+            trackingPage
+        );
 
     }
 );
@@ -448,24 +568,31 @@ homeBtn.addEventListener(
     "click",
     function () {
 
-        showPage(homePage);
+        showPage(
+            homePage
+        );
 
     }
 );
 
 
 // ======================================================
-// JOIN EVENT + SAVE MEMBER
+// JOIN EVENT
 // ======================================================
 
 joinSubmitBtn.addEventListener(
     "click",
     async function () {
 
+        // ----------------------------------------------
+        // GET INPUTS
+        // ----------------------------------------------
+
         const joinCode =
             document.getElementById(
                 "joinCode"
-            ).value
+            )
+            .value
             .trim()
             .toUpperCase();
 
@@ -473,7 +600,8 @@ joinSubmitBtn.addEventListener(
         const joinName =
             document.getElementById(
                 "joinName"
-            ).value
+            )
+            .value
             .trim();
 
 
@@ -527,11 +655,20 @@ joinSubmitBtn.addEventListener(
         try {
 
             // ==========================================
-            // FIND EVENT
+            // SEARCH EVENT
             // ==========================================
 
+            console.log(
+                "Searching for:",
+                joinCode
+            );
+
+
             const eventsRef =
-                collection(db, "events");
+                collection(
+                    db,
+                    "events"
+                );
 
 
             const eventQuery =
@@ -546,14 +683,18 @@ joinSubmitBtn.addEventListener(
 
 
             const querySnapshot =
-                await getDocs(eventQuery);
+                await getDocs(
+                    eventQuery
+                );
 
 
             // ==========================================
             // EVENT NOT FOUND
             // ==========================================
 
-            if (querySnapshot.empty) {
+            if (
+                querySnapshot.empty
+            ) {
 
                 alert(
                     "❌ Event not found!\n\n" +
@@ -569,23 +710,22 @@ joinSubmitBtn.addEventListener(
             // GET EVENT
             // ==========================================
 
-            let eventDoc = null;
-
-            querySnapshot.forEach(
-                function (doc) {
-
-                    eventDoc = doc;
-
-                }
-            );
+            const eventDoc =
+                querySnapshot.docs[0];
 
 
             const eventData =
                 eventDoc.data();
 
 
+            console.log(
+                "EVENT FOUND:",
+                eventDoc.id
+            );
+
+
             // ==========================================
-            // SAVE MEMBER
+            // MEMBER SUBCOLLECTION
             // ==========================================
 
             const membersRef =
@@ -597,25 +737,52 @@ joinSubmitBtn.addEventListener(
                 );
 
 
-            await addDoc(
-                membersRef,
-                {
-
-                    name:
-                        joinName,
-
-                    joinedAt:
-                        new Date(),
-
-                    online:
-                        true
-
-                }
+            console.log(
+                "Saving member..."
             );
 
 
             // ==========================================
-            // SAVE CURRENT EVENT
+            // SAVE MEMBER
+            // ==========================================
+
+            const memberDoc =
+                await addDoc(
+                    membersRef,
+                    {
+
+                        name:
+                            joinName,
+
+                        online:
+                            true,
+
+                        joinedAt:
+                            new Date()
+
+                    }
+                );
+
+
+            // ==========================================
+            // MEMBER SAVED
+            // ==========================================
+
+            console.log(
+                "MEMBER SAVED:",
+                memberDoc.id
+            );
+
+
+            alert(
+                "🔥 MEMBER SAVED TO FIREBASE!\n\n" +
+                "Name: " +
+                joinName
+            );
+
+
+            // ==========================================
+            // CURRENT EVENT
             // ==========================================
 
             currentEvent = {
@@ -648,7 +815,7 @@ joinSubmitBtn.addEventListener(
 
 
             // ==========================================
-            // UPDATE TRACKING
+            // TRACKING PAGE
             // ==========================================
 
             document.getElementById(
@@ -663,31 +830,26 @@ joinSubmitBtn.addEventListener(
                 eventData.destination;
 
 
-            // ==========================================
-            // OPEN TRACKING
-            // ==========================================
-
-            showPage(trackingPage);
-
-
-            alert(
-                "✅ Successfully joined!\n\n" +
-                "Welcome, " +
-                joinName +
-                "!"
+            showPage(
+                trackingPage
             );
 
         }
 
         catch (error) {
 
+            // ==========================================
+            // ERROR
+            // ==========================================
+
             console.error(
-                "Join error:",
+                "MEMBER SAVE ERROR:",
                 error
             );
 
+
             alert(
-                "❌ Firebase Error:\n\n" +
+                "❌ MEMBER SAVE ERROR\n\n" +
                 error.message
             );
 
